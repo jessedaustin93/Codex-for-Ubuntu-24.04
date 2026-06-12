@@ -1,0 +1,7 @@
+node_modules/
+dist/
+release/
+schemas/
+qa-*.png
+*.log
+.DS_Store

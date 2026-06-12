@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
+    <title>Codex Linux</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="titlebar">
+      <div class="brand-mark" aria-hidden="true">C</div>
+      <div class="workspace-path" id="workspacePath">Codex Linux</div>
+      <button class="branch-button" type="button" title="Current Git branch">
+        <svg viewBox="0 0 24 24"><path d="M6 3v12a4 4 0 0 0 4 4h8M6 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4ZM18 3v4a4 4 0 0 1-4 4h-4"/></svg>
+        main
+      </button>
+      <div class="titlebar-spacer"></div>
+      <button class="icon-button" id="searchButton" title="Search memories" aria-label="Search memories">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+      </button>
+      <button class="icon-button" id="settingsButton" title="Settings" aria-label="Settings">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.8 1.8 0 0 0 .4 2l.1.1-2.8 2.8-.1-.1a1.8 1.8 0 0 0-2-.4 1.8 1.8 0 0 0-1.1 1.7V21H10v-.1A1.8 1.8 0 0 0 8.9 19a1.8 1.8 0 0 0-2 .4l-.1.1L4 16.7l.1-.1a1.8 1.8 0 0 0 .4-2A1.8 1.8 0 0 0 2.8 13H2V9h.8a1.8 1.8 0 0 0 1.7-1.1 1.8 1.8 0 0 0-.4-2L4 5.8 6.8 3l.1.1a1.8 1.8 0 0 0 2 .4A1.8 1.8 0 0 0 10 1.8V1h4v.8a1.8 1.8 0 0 0 1.1 1.7 1.8 1.8 0 0 0 2-.4l.1-.1L20 5.8l-.1.1a1.8 1.8 0 0 0-.4 2A1.8 1.8 0 0 0 21.2 9h.8v4h-.8a1.8 1.8 0 0 0-1.8 2Z"/></svg>
+      </button>
+    </div>
+
+    <main class="app-shell">
+      <aside class="sidebar">
+        <button class="workspace-switcher" id="workspaceButton">
+          <span class="workspace-icon">CL</span>
+          <span>
+            <strong>Codex Linux</strong>
+            <small id="workspaceName">Choose workspace</small>
+          </span>
+          <svg viewBox="0 0 24 24"><path d="m8 10 4 4 4-4"/></svg>
+        </button>
+        <button class="new-thread" id="newThreadButton">
+          <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+          New thread
+          <kbd>Ctrl N</kbd>
+        </button>
+
+        <nav class="thread-nav" id="threadNav">
+          <p class="section-label">Today</p>
+          <button class="thread-item selected" data-thread="local">
+            <span class="thread-state"></span>
+            <span><strong>Build Ubuntu desktop client</strong><small>Working</small></span>
+          </button>
+          <p class="section-label">Earlier</p>
+          <button class="thread-item"><span></span><span><strong>Review release checks</strong><small>Yesterday</small></span></button>
+          <button class="thread-item"><span></span><span><strong>Fix sync timeout</strong><small>Tuesday</small></span></button>
+        </nav>
+
+        <div class="sidebar-bottom">
+          <button class="memory-button active" id="memoryButton">
+            <svg viewBox="0 0 24 24"><path d="M9 4H6a2 2 0 0 0-2 2v3M15 4h3a2 2 0 0 1 2 2v3M9 20H6a2 2 0 0 1-2-2v-3M15 20h3a2 2 0 0 0 2-2v-3"/><path d="M9 9h6v6H9z"/></svg>
+            Memory
+            <span id="memoryCount">0</span>
+          </button>
+          <button class="profile-button"><span>WU</span><strong>Local profile</strong><small>ChatGPT auth</small></button>
+        </div>
+      </aside>
+
+      <section class="conversation">
+        <header class="conversation-header">
+          <div>
+            <h1>Build Ubuntu desktop client</h1>
+            <p id="headerStatus"><span class="pulse"></span> Ready to connect</p>
+          </div>
+          <button class="quiet-button" id="interruptButton" disabled>Stop</button>
+        </header>
+
+        <div class="messages" id="messages" aria-live="polite">
+          <article class="message user-message">
+            <div class="avatar user-avatar">WU</div>
+            <div>
+              <div class="message-meta"><strong>You</strong><time>just now</time></div>
+              <p>Make a Codex program for Ubuntu 24.04 with the same core functions and memory.</p>
+            </div>
+          </article>
+          <article class="message assistant-message">
+            <div class="avatar assistant-avatar">C</div>
+            <div class="message-body">
+              <div class="message-meta"><strong>Codex</strong><span class="working-label">Working</span></div>
+              <p>I’ll build the client around the official <code>codex app-server</code>, keeping threads, approvals, tool output, and memory tied to your existing Codex home.</p>
+              <div class="tool-card">
+                <div class="tool-card-header"><span class="success-dot"></span><strong>Architecture ready</strong><small>Local-first</small></div>
+                <div class="tool-row"><code>codex app-server --listen stdio://</code><span>JSONL</span></div>
+                <div class="tool-row"><code>~/.codex/memories</code><span>Shared</span></div>
+                <div class="tool-row"><code>Electron + Ubuntu packaging</code><span>Native</span></div>
+              </div>
+              <div class="approval-card" id="demoApproval">
+                <div><span class="terminal-icon">$</span><strong>Run command</strong></div>
+                <code>npm install &amp;&amp; npm run dist</code>
+                <p>Build the Ubuntu AppImage and Debian package.</p>
+                <div class="approval-actions">
+                  <button class="secondary-button" data-approval="always">Always allow</button>
+                  <button class="primary-button" data-approval="approve">Approve</button>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <form class="composer" id="composer">
+          <textarea id="promptInput" rows="1" placeholder="Ask Codex anything" aria-label="Message Codex"></textarea>
+          <div class="composer-footer">
+            <div>
+              <button class="composer-tool" type="button" title="Attach file">
+                <svg viewBox="0 0 24 24"><path d="m20 12-8 8a6 6 0 0 1-8-8l9-9a4 4 0 0 1 6 6l-9 9a2 2 0 0 1-3-3l8-8"/></svg>
+              </button>
+              <button class="mode-button" type="button">Agent <svg viewBox="0 0 24 24"><path d="m8 10 4 4 4-4"/></svg></button>
+            </div>
+            <div class="send-area">
+              <span>Ctrl Enter</span>
+              <button class="send-button" type="submit" aria-label="Send message">
+                <svg viewBox="0 0 24 24"><path d="m5 12 7-7 7 7M12 5v14"/></svg>
+              </button>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <aside class="inspector">
+        <section class="inspector-section">
+          <button class="inspector-heading"><span>Plan</span><span>3 of 4</span></button>
+          <ol class="plan-list" id="planList">
+            <li class="done"><span></span><p><strong>Inspect Codex interfaces</strong><small>Official app-server and memory paths</small></p></li>
+            <li class="done"><span></span><p><strong>Design desktop shell</strong><small>Ubuntu-native three pane layout</small></p></li>
+            <li class="active"><span></span><p><strong>Implement core functions</strong><small>Threads, tools, approvals, memory</small></p></li>
+            <li><span></span><p><strong>Package and verify</strong><small>AppImage and .deb</small></p></li>
+          </ol>
+        </section>
+        <section class="inspector-section">
+          <button class="inspector-heading"><span>Changed files</span><span>7</span></button>
+          <div class="file-list" id="fileList">
+            <button><span class="file-status added">A</span><code>electron/main.cjs</code><small>+240</small></button>
+            <button><span class="file-status added">A</span><code>src/app.js</code><small>+260</small></button>
+            <button><span class="file-status added">A</span><code>src/styles.css</code><small>+610</small></button>
+            <button><span class="file-status added">A</span><code>README.md</code><small>+90</small></button>
+          </div>
+        </section>
+        <section class="inspector-section memory-panel" id="memoryPanel">
+          <div class="inspector-heading static"><span>Memory</span><label><input type="checkbox" id="memoryToggle" checked><i></i></label></div>
+          <input class="memory-search" id="memorySearch" placeholder="Search Codex memory" />
+          <div class="memory-results" id="memoryResults">
+            <p class="empty-state">Connect to load <code>~/.codex/memories</code>.</p>
+          </div>
+        </section>
+        <section class="inspector-section context-section">
+          <div class="inspector-heading static"><span>Context</span><span id="contextLabel">Local</span></div>
+          <div class="context-bar"><i id="contextBar"></i></div>
+          <div class="permission-row"><span>Permissions</span><strong>On request</strong></div>
+          <div class="permission-row"><span>Sandbox</span><strong>Workspace write</strong></div>
+        </section>
+      </aside>
+    </main>
+
+    <footer class="statusbar">
+      <span id="connectionStatus"><i class="status-light offline"></i> Codex CLI offline</span>
+      <span class="status-spacer"></span>
+      <span id="platformStatus">Ubuntu 24.04 target</span>
+      <span>UTF-8</span>
+    </footer>
+
+    <dialog id="settingsDialog">
+      <form method="dialog">
+        <div class="dialog-header"><h2>Settings</h2><button value="cancel" aria-label="Close">×</button></div>
+        <label class="setting-row"><span><strong>Use Codex memories</strong><small>Share context from <code>~/.codex/memories</code></small></span><input type="checkbox" id="dialogMemoryToggle" checked></label>
+        <div class="dialog-note"><strong>Codex CLI required</strong><p>Install the CLI, run <code>codex login</code>, then reconnect this app.</p></div>
+        <button class="primary-button dialog-done" value="default">Done</button>
+      </form>
+    </dialog>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

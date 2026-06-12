@@ -1,0 +1,50 @@
+{
+  "name": "codex-linux",
+  "version": "0.1.0",
+  "description": "A local-first Codex desktop client for Ubuntu 24.04",
+  "desktopName": "codex-linux.desktop",
+  "main": "electron/main.cjs",
+  "author": "Codex Linux contributors",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "check": "node --check electron/main.cjs && node --check electron/preload.cjs && node --check src/app.js",
+    "schema": "codex app-server generate-json-schema --out ./schemas --experimental",
+    "dist": "electron-builder --linux AppImage deb",
+    "dist:dir": "electron-builder --linux dir"
+  },
+  "devDependencies": {
+    "electron": "^39.8.5",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "com.codexlinux.desktop",
+    "productName": "Codex Linux",
+    "asar": true,
+    "files": [
+      "electron/**/*",
+      "src/**/*",
+      "package.json"
+    ],
+    "linux": {
+      "syncDesktopName": true,
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "category": "Development",
+      "artifactName": "Codex-Linux-${version}-${arch}.${ext}"
+    },
+    "deb": {
+      "depends": [
+        "libgtk-3-0",
+        "libnotify4",
+        "libnss3",
+        "libxss1",
+        "libxtst6",
+        "xdg-utils"
+      ]
+    }
+  }
+}
